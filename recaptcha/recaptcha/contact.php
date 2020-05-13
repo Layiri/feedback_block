@@ -1,13 +1,7 @@
 <?php
-
 // require ReCaptcha class
-require('libraries/recaptcha-master/src/autoload.php');
+require('recaptcha-master/src/autoload.php');
 
-use ReCaptcha\ReCaptcha;
-use ReCaptcha\RequestMethod\CurlPost;
-
-
-var_dump('dededew');die;
 // configure
 // an email address that will be in the From field of the email.
 $from = 'Demo contact form <demo@domain.com>';
@@ -20,14 +14,7 @@ $subject = 'New message from contact form';
 
 // form field names and their translations.
 // array variable name => Text to appear in the email
-$fields = [
-    'name' => 'Name',
-    'email' => 'Email',
-    'comment' => 'Comment',
-    'rating' => 'Rating',
-    'advantages' => 'Advantages',
-    'disadvantages' => 'Disadvantages',
-];
+$fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message');
 
 // message that will be displayed when everything is OK :)
 $okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
@@ -35,8 +22,8 @@ $okMessage = 'Contact form successfully submitted. Thank you, I will get back to
 // If something goes wrong, we will display this message.
 $errorMessage = 'There was an error while submitting the form. Please try again later';
 
-// ReCaptch Secret TODO:: change in production
-$recaptchaSecret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
+// ReCaptch Secret
+$recaptchaSecret = '6LfKURIUAAAAAKEPdFXGUiRsQYtEYUnH1-OB5Mgx';
 
 // let's do the sending
 
@@ -48,23 +35,25 @@ try {
 
         // validate the ReCaptcha, if something is wrong, we throw an Exception,
         // i.e. code stops executing and goes to catch() block
-
+        
         if (!isset($_POST['g-recaptcha-response'])) {
             throw new \Exception('ReCaptcha is not set.');
         }
 
-        $recaptcha = new ReCaptcha($recaptchaSecret, new CurlPost());
-
+        // do not forget to enter your secret key from https://www.google.com/recaptcha/admin
+        
+        $recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSecret, new \ReCaptcha\RequestMethod\CurlPost());
+        
         // we validate the ReCaptcha field together with the user's IP address
-
+        
         $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
         if (!$response->isSuccess()) {
             throw new \Exception('ReCaptcha was not validated.');
         }
-
+        
         // everything went well, we can compose the message, as usually
-
+        
         $emailText = "You have a new message from your contact form\n=============================\n";
 
         foreach ($_POST as $key => $value) {
@@ -73,14 +62,14 @@ try {
                 $emailText .= "$fields[$key]: $value\n";
             }
         }
-
+    
         // All the neccessary headers for the email.
         $headers = array('Content-Type: text/plain; charset="UTF-8";',
             'From: ' . $from,
             'Reply-To: ' . $from,
             'Return-Path: ' . $from,
         );
-
+        
         // Send email
         mail($sendTo, $subject, $emailText, implode("\n", $headers));
 
