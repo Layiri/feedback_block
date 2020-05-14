@@ -1,10 +1,12 @@
 <?php
 
-return [
-  'db' => [
-      'dsn'=> 'mysql:host=localhost;port=3308;dbname=agrocrm',
-      'username'=> 'root',
-      'password'=> '',
-      'charset'=> 'utf8',
-  ],
+$config = [
+    'db' => [
+        'host' => 'localhost',
+        'port' => '3308',
+        'dbname' => 'feedback',
+        'username' => 'root',
+        'password' => '',
+        'charset' => 'utf8',
+    ],
 ];

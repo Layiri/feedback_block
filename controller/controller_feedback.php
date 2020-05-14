@@ -2,20 +2,22 @@
 
 // require ReCaptcha class
 require('../libraries/recaptcha-master/src/autoload.php');
+require('../function/functions.php');
 
 use ReCaptcha\ReCaptcha;
 use ReCaptcha\RequestMethod\CurlPost;
 
+$product_id = $_POST['product'];
 $name = $_POST['name'];
 $email = $_POST['email'];
-$comment = $_POST['comment'];
+$comment = strip_tags($_POST['comment']);
 $rating = $_POST['rating'];
-$advantages = $_POST['advantage'];
-$disadvantages = $_POST['disadvantage'];
+$advantages = strip_tags($_POST['advantage']);
+$disadvantages = strip_tags($_POST['disadvantage']);
+$user_ip = userIpAddr();
+$user_agent = userAgent();
+$file_path = saveFile();
 
-//$okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
-//$errorMessage = 'There was an error while submitting the form. Please try again later';
-//
 // ReCaptch Secret TODO:: change in production
 $recaptchaSecret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 
@@ -38,13 +40,26 @@ try {
         $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
 //        TODO::Uncomment
-        if (!$response->isSuccess()) {
-            throw new \Exception('ReCaptcha was not validated.');
-        }
+//        if (!$response->isSuccess()) {
+//            throw new \Exception('ReCaptcha was not validated.');
+//        }
+        // save in the database
+        if ((!@include_once('../models/FeedBack.php')) || !file_exists('../models/FeedBack.php')) {
+            throw new Exception ('Something is wrong, please contact your webmaster');
+        } else {
+            require_once('../models/FeedBack.php');
+            header("Location: ../views/product.php");
+//            header("Location: shirts.php");
+            exit();
 
+        }
     } else {
         throw new \Exception('The feedback cann\'t be empty.');
     }
 } catch (\Exception $e) {
     $responseArray = array('type' => 'danger', 'message' => $e->getMessage());
+    var_dump($responseArray);
+    die;
 }
+
+

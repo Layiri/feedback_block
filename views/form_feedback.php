@@ -1,43 +1,37 @@
-<html>
+<html lang="en">
 
 <head>
-    <title>Contact Form Tutorial by Bootstrapious.com</title>
+    <title>Feedback</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,500' rel='stylesheet' type='text/css'>
-    <!--    <link href='custom.css' rel='stylesheet' type='text/css'>-->
+    <link href='../css/feedback.css' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
 
+
 <div class="container">
-
     <div class="row">
-
         <div class="col-xl-8 offset-xl-2">
-
-            <h1>Contact form Tutorial from
-                <a href="http://bootstrapious.com">Bootstrapious.com</a>
+            <h1>
+                Feedback Form
             </h1>
 
-            <p class="lead">This is a demo for our tutorial dedicated to crafting working Bootstrap contact form with
-                PHP and AJAX background.
-                At this part, we will add Google's ReCaptcha too.</p>
-
-
-            <form id="feedback-form" method="post" action="controller.php" role="form">
-
+            <form id="feedback-form" class="needs-validation" method="post"
+                  action="../controller/controller_feedback.php" role="form" enctype="multipart/form-data">
                 <div class="messages"></div>
-
                 <div class="controls">
                     <div class="row">
+                        <input id="form_product" type="hidden" name="product" required="required" value="1" ">
+
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="form_name">Name *</label>
                                 <input id="form_name" type="text" name="name" class="form-control"
                                        placeholder="Please enter your firstname *" required="required"
-                                       data-error="Firstname is required.">
+                                       data-error="Full name is required.">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -56,17 +50,28 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="form_comment">Comment *</label>
-                                <input id="form_comment" type="text" name="comment" class="form-control"
-                                       placeholder="Please enter your comment *" required="required"
-                                       data-error="Valid comment is required.">
+                                <textarea id="form_comment" name="comment" class="form-control"
+                                          placeholder="Comment is required"
+                                          rows="4" required="required"
+                                          data-error="Please, leave us a message."></textarea>
                                 <div class="help-block with-errors"></div>
+
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="form_rating">Rating * TODOOO::</label>
-                                <input id="form_rating" type="name" name="rating" class="form-control"
-                                       placeholder="Rating * TODOOO">
+
+                                <label for="form_rating">Rating *:</label>
+                                <div class="stars" data-rating="">
+                                    <span class="star">&nbsp;</span>
+                                    <span class="star">&nbsp;</span>
+                                    <span class="star">&nbsp;</span>
+                                    <span class="star">&nbsp;</span>
+                                    <span class="star">&nbsp;</span>
+                                </div>
+
+
+                                <input id="form_rating" type="hidden" name="rating" class="form-control">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -91,31 +96,33 @@
                         </div>
                     </div>
 
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="form_comment">Comment *</label>-->
-                    <!--                        <textarea id="form_comment" name="comment" class="form-control" placeholder="Message for me *"-->
-                    <!--                                  rows="4" required="required"-->
-                    <!--                                  data-error="Please, leave us a message."></textarea>-->
-                    <!--                        <div class="help-block with-errors"></div>-->
-                    <!--                    </div>-->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="form_file_to_upload">Images</label>
+                                <input id="form_file_to_upload" type="file"
+                                       accept="image/png, image/jpeg, image/gif, text/plain"
+                                       name="file_to_upload" class="form-control"
+                                       placeholder="Please enter your advantage"/>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
 
-
-                    <div class="form-group">
-                        <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                             data-callback="verifyRecaptchaCallback"
-                             data-expired-callback="expiredRecaptchaCallback"></div>
-                        <input id="recaptch" class="form-control d-none" data-recaptcha="true" required
-                               data-error="Please complete the Captcha">
-                        <div class="help-block with-errors"></div>
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                 data-callback="verifyRecaptchaCallback"
+                                 data-expired-callback="expiredRecaptchaCallback"></div>
+                            <input id="recaptch" class="form-control d-none" data-recaptcha="true" required="required"
+                                   data-error="Please complete the Captcha">
+                            <div class="help-block with-errors"></div>
+                        </div>
                     </div>
 
 
-                    <input type="submit" class="btn btn-success btn-send" value="Send message">
-
-                    <!--                    <p class="text-muted">-->
-                    <!--                        <strong>*</strong> These fields are required. Contact form template by-->
-                    <!--                        <a href="https://bootstrapious.com/p/bootstrap-recaptcha" target="_blank">Bootstrapious</a>.-->
-                    <!--                    </p>-->
+                    <input type="submit" class="btn btn-success btn-send" value="Save feedback">
+                    <p class="text-muted">
+                        <strong>*</strong> These fields are required.
+                    </p>
 
                 </div>
 
@@ -130,14 +137,10 @@
 </div>
 <!-- /.container-->
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></script>
-
-<script src="../recaptcha/recaptcha/validator.js"></script>
-<!--<script src="contact.js"></script>-->
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>-->
+<script src="../js/validator.js"></script>
 
 
 <script>
@@ -163,104 +166,112 @@
             console.log(inputReCaptcha);
 
             alert('ferr');
-
-
-
         };
 
+        addListeners();
+        setRating(); //based on value inside the div
 
-
-
-
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
+        // document.querySelector("#feedback-form").validator();
+        // document.getElementById ('feedback-form').validator();
+        //
+        // $('#feedback-form').validator();
+        // let form = document.querySelector('form');
+        //
+        // let data = new FormData(form);
+        // let req = new XMLHttpRequest();
+        // req.open("POST", '/controller/controller_feedback.php', true);
+        // req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        // req.send(data);
+        // req.onreadystatechange = function() {
         //     if (this.readyState == 4 && this.status == 200) {
         //         document.getElementById("demo").innerHTML =
         //             this.responseText;
         //     }
         // };
-        // xhttp.open("GET", "ajax_info.txt", true);
-        // xhttp.send();
-        //
-        //
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", '/server', true);
-//
-// Envoie les informations du header adaptées avec la requête
-        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        //
-        // xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
-        //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-// Requête finie, traitement ici.
-            // }
-        // }
-        // xhr.send("foo=bar&lorem=ipsum");
-// xhr.send(new Int8Array());
-// xhr.send(document);
-
-
-
-        let form = document.querySelector('form');
-
-        let data = new FormData(form);
-        let req = new XMLHttpRequest();
-        xhr.open("POST", '/controller.php', true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        req.send(data);
-
-
-
-
 
     }, false);
 
+    function validateForm() {
+        let rating = document.forms["feedback-form"]["rating"].value;
+        let recaptch = document.forms["feedback-form"]["recaptch"].value;
+        if (rating == "" || recaptch == "") {
+            alert("rating must be filled out");
+            return false;
+        }
+    }
 
-    // $(function () {
-    //
-    //     window.verifyRecaptchaCallback = function (response) {
-    //         $('input[data-recaptcha]').val(response).trigger('change')
-    //     };
-    //
-    //     window.expiredRecaptchaCallback = function () {
-    //         $('input[data-recaptcha]').val("").trigger('change')
-    //     };
-    //
-    //     console.log('fe');
-    //
-    //     let feedback = $("#feedback");
-    //     feedback.validator();
-    //
-    //     $('#feedback-form').on('submit', function (e) {
-    //         if (!e.isDefaultPrevented()) {
-    //             var url = "controller.php";
-    //
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: url,
-    //                 data: $(this).serialize(),
-    //                 success: function (data) {
-    //
-    //                     var messageAlert = 'alert-' + data.type;
-    //                     var messageText = data.message;
-    //
-    //                     var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-    //                     if (messageAlert && messageText) {
-    //                         $('#feedback-form').find('.messages').html(alertBox);
-    //                         $('#feedback-form')[0].reset();
-    //                         grecaptcha.reset();
-    //                     }
-    //                 },
-    //                 error:function (data) {
-    //                     console.log('deda');
-    //                 }
-    //             });
-    //             return false;
-    //         }
-    //     })
-    // });
+    function addListeners() {
+        var stars = document.querySelectorAll('.star');
+        [].forEach.call(stars, function (star, index) {
+            star.addEventListener('click', (function (idx) {
+                document.querySelector('.stars').setAttribute('data-rating', idx + 1);
+                document.getElementById('form_rating').value = idx + 1;
+                setRating();
+            }).bind(window, index));
+        });
+    }
+
+    function setRating() {
+        var stars = document.querySelectorAll('.star');
+        var rating = parseInt(document.querySelector('.stars').getAttribute('data-rating'));
+        [].forEach.call(stars, function (star, index) {
+            if (rating > index) {
+                star.classList.add('rated');
+            } else {
+                star.classList.remove('rated');
+            }
+        });
+    }
+</script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+
+<script>
+    var control = document.getElementById("form_file_to_upload");
+    control.addEventListener("change", function (event) {
+        // When the control has changed, there are new files
+        var file = control.files;
+        for (var i = 0; i < file.length; i++) {
+            console.log("Filename: " + file[i].name);
+            console.log("Type: " + file[i].type);
+            console.log("Size: " + file[i].size + " bytes");
+            if (file[i].type === "image/jpeg" || file[i].type === "image/gif" || file[i].type === "image/png" || file[i].type === "text/plain") {
+                if (file[i].type === "text/plain") {
+                    if (file[i].size > "100000") {
+                        alert("Please select file where size under 100kb");
+                        document.getElementById("form_file_to_upload").value = "";
+                    }
+                }
+            } else {
+                alert("Please select the authorize type file or image");
+                document.getElementById("form_file_to_upload").value = "";
+            }
+        }
+    }, false);
 
 </script>
+
+
 </body>
 
 </html>

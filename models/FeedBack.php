@@ -1,21 +1,17 @@
 <?php
+include_once '../function/connect_database.php';
 
-
-//Connect to the MySQL database using the PDO object.
-$pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '');
-
-
-$req = $pdo->prepare('INSERT INTO jeux_video(name,email,comment,rating,advantage,disadvantages,user_ip,user_agent,created_at) VALUES(:name, :email, :comment, :rating, :advantage, :disadvantages,user_ip,user_agent,created_at)');
+$req = $conn->prepare('INSERT INTO otzivi(product_id,full_name,email,comment,ratings,advantages,disadvantages,user_ip,user_agent,file_path,created_at) VALUES(:product_id, :full_name, :email, :comment, :ratings, :advantages, :disadvantages, :user_ip, :user_agent, :file_path, :created_at)');
 $req->execute(array(
-    'name' => $name,
+    'product_id' => $product_id,
+    'full_name' => $name,
     'email' => $email,
     'comment' => $comment,
-    'rating' => $rating,
-    'advantage' => $advantage,
+    'ratings' => $rating,
+    'advantages' => $advantages,
     'disadvantages' => $disadvantages,
     'user_ip' => $user_ip,
-    'user_agent' =>  $_SERVER['HTTP_USER_AGENT'],
+    'user_agent' => $user_agent,
+    'file_path' => $file_path,
     'created_at' => time(),
 ));
-
-echo 'Le jeu a bien été ajouté !';
