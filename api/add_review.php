@@ -21,7 +21,7 @@ $user_agent = Functions::userAgent();
 if ($product_name) {
 
 
-    $product = $conn->query("SELECT * FROM `products` AS `p` WHERE `p`.`name`LIKE '%$product_name%'")->fetch();
+    $product = $conn->query( "SELECT * FROM `products` AS `p` WHERE `p`.`name`LIKE '%$product_name%'")->fetch();
     if ($product) {
 
         if ($author && $email && $comments && $ratings && !filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
