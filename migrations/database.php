@@ -1,5 +1,8 @@
 <?php
 include_once '../helpers/ConnectDatabase.php';
+include_once '../config/config.php';
+
+$conn = ConnectDatabase::connectDb($config);
 
 $create_table_articles = "
 CREATE TABLE IF NOT EXISTS `products`(
@@ -30,6 +33,15 @@ CREATE TABLE IF NOT EXISTS `otzivi`(
 )ENGINE=InnoDB;
 ";
 $conn->exec($alter_table_otzivi);
+
+
+$create_table_articles = "
+INSERT INTO `products` (`id`, `name`, `created_at`) VALUES (NULL, '4k tv', '1589556814');
+INSERT INTO `products` (`id`, `name`, `created_at`) VALUES (NULL, 'iphone', '1589056914');
+INSERT INTO `products` (`id`, `name`, `created_at`) VALUES (NULL, 'samsung', '1589259814');
+INSERT INTO `products` (`id`, `name`, `created_at`) VALUES (NULL, 'lamborghini', '1589358814');
+";
+$conn->exec($create_table_articles);
 
 echo 'init database with success';
 die;
