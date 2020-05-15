@@ -1,5 +1,5 @@
 <?php
-include_once '../function/connect_database.php';
+include_once '../helpers/ConnectDatabase.php';
 
 $create_table_articles = "
 CREATE TABLE IF NOT EXISTS `products`(
@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS `products`(
 )ENGINE=InnoDB;
 ";
 $conn->exec($create_table_articles);
-
 
 $alter_table_otzivi = "
 CREATE TABLE IF NOT EXISTS `otzivi`(

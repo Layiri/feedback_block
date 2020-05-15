@@ -1,6 +1,6 @@
 <?php
 
-$config = [
+return $config = [
     'db' => [
         'host' => 'localhost',
         'port' => '3308',

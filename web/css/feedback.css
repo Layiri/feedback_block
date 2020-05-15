@@ -1,0 +1,20 @@
+.star{
+    color: goldenrod;
+    font-size: 2.0rem;
+    padding: 0 0.5rem; /* space out the stars */
+}
+.star::before{
+    content: '\2606';
+    cursor: pointer;
+}
+.star:hover::before{
+    content: '\2605';
+    color: #bada55;
+}
+.star.rated::before{
+    content: '\2605';
+}
+
+body {
+    padding-top: 56px;
+}

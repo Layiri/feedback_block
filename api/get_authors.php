@@ -1,7 +1,9 @@
 <?php
 
-include_once('../function/connect_database.php');
+include_once '../helpers/ConnectDatabase.php';
+include_once '../config/config.php';
 
+$conn = ConnectDatabase::connectDb($config);
 
 $authors = $conn->query('SELECT * FROM `otzivi`')->fetchAll();
 $authors_api = [];

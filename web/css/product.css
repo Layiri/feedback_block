@@ -1,0 +1,91 @@
+.star {
+    color: goldenrod;
+    font-size: 1.0rem;
+}
+
+.star::before {
+    content: '\2606';
+}
+
+.star.rated::before {
+    content: '\2605';
+}
+
+.material-icons.add {
+    color: green;
+    vertical-align: middle;
+}
+
+.material-icons.maximize {
+    color: red;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.review_advantages_title.span {
+    font-weight: bold;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.review_disadvantages.span {
+    font-weight: bold;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.review_advantages_title {
+    font-weight: bold;
+}
+
+.review_disadvantages_title {
+    font-weight: bold;
+}
+
+body {
+    padding-top: 56px;
+}
+
+.response_button {
+    display: block;
+    width: 115px;
+    color: #4682B4;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #4682B4;
+}
+
+.review_button {
+    width: 170px;
+    color: white;
+    background-color: #4682B4;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #4682B4;
+}
+
+.review_button:hover {
+    color: white;
+}
+
+.reviews{
+    padding: 50px;
+}
+
+.review_button_align{
+    text-align: right;
+}
+
+.reviews_title_action{
+    padding: 10px;
+}
+
+.review_created_at{
+    font-size: 12px;
+}
+
+.review_full_name{
+    font-size: 17px;
+
+}

@@ -1,11 +1,13 @@
 <?php
 
-// require ReCaptcha class
-require('../libraries/recaptcha-master/src/autoload.php');
-require('../function/functions.php');
+require_once('../helpers/Functions.php');
+require_once('../helpers/UploadFiles.php');
+require_once('../models/FeedBack.php');
+include_once '../helpers/ConnectDatabase.php';
+include_once '../config/config.php';
 
-use ReCaptcha\ReCaptcha;
-use ReCaptcha\RequestMethod\CurlPost;
+
+$conn = ConnectDatabase::connectDb($config);
 
 $product_id = $_POST['product'];
 $name = $_POST['name'];
@@ -14,44 +16,32 @@ $comment = strip_tags($_POST['comment']);
 $rating = $_POST['rating'];
 $advantages = strip_tags($_POST['advantage']);
 $disadvantages = strip_tags($_POST['disadvantage']);
-$user_ip = userIpAddr();
-$user_agent = userAgent();
-$file_path = saveFile();
-
-// ReCaptch Secret TODO:: change in production
-$recaptchaSecret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
-
-//TODO :: delete before send
-error_reporting(E_ALL & ~E_NOTICE);
+$user_ip = Functions::userIpAddr();
+$user_agent = Functions::userAgent();
+$file_path = UploadFiles::saveFile();
 
 try {
     if (!empty($_POST)) {
 
-        // validate the ReCaptcha, if something is wrong, we throw an Exception,
-        // i.e. code stops executing and goes to catch() block
+//         save in the database
+        $saveFeedback = new FeedBack($conn);
 
-        if (!isset($_POST['g-recaptcha-response'])) {
-            throw new \Exception('ReCaptcha is not set.');
-        }
+        $saveFeedback->product_id = $product_id;
+        $saveFeedback->full_name = $name;
+        $saveFeedback->email = $email;
+        $saveFeedback->comment = $comment;
+        $saveFeedback->ratings = $rating;
+        $saveFeedback->advantages = $advantages;
+        $saveFeedback->disadvantages = $disadvantages;
+        $saveFeedback->user_ip = $user_ip;
+        $saveFeedback->user_agent = $user_agent;
+        $saveFeedback->file_path = $file_path;
 
-        $recaptcha = new ReCaptcha($recaptchaSecret, new CurlPost());
-
-        // we validate the ReCaptcha field together with the user's IP address
-        $response = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-
-//        TODO::Uncomment
-//        if (!$response->isSuccess()) {
-//            throw new \Exception('ReCaptcha was not validated.');
-//        }
-        // save in the database
-        if ((!@include_once('../models/FeedBack.php')) || !file_exists('../models/FeedBack.php')) {
-            throw new Exception ('Something is wrong, please contact your webmaster');
-        } else {
-            require_once('../models/FeedBack.php');
-            header("Location: ../views/product.php");
-//            header("Location: shirts.php");
+        if ($saveFeedback->save()) {
+            header("Location: ../index.php");
             exit();
-
+        } else {
+            throw new Exception ('Something is wrong, please contact your webmaster');
         }
     } else {
         throw new \Exception('The feedback cann\'t be empty.');
@@ -61,5 +51,3 @@ try {
     var_dump($responseArray);
     die;
 }
-
-
